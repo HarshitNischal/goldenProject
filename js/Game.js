@@ -29,88 +29,127 @@ class Game {
       form.display();
     }
 
-    car1 = createSprite(50,200);
+    car1 = createSprite(960,253);
     car1.addImage(c1)
-    car1.scale=0.1
-    car2 = createSprite(60,200);
+    car1.scale=0.11
+    car2 = createSprite(1019,239);
     car2.addImage(c2)
-    car2.scale=0.1
-    car3 = createSprite(70,200);
+    car2.scale=0.07
+    car3 = createSprite(965,303);
     car3.addImage(c3)
-    car3.scale=0.1
-    car4 = createSprite(80,200);
+    car3.scale=0.11
+    car4 = createSprite(987,338);
     car4.addImage(c4)
-    car4.scale=0.1
-    car5 = createSprite(90,200);
+    car4.scale=0.11
+    car5 = createSprite(1037,354);
     car5.addImage(c5)
-    car5.scale=0.1
-    car6 = createSprite(100,200);
+    car5.scale=0.07
+    car6 = createSprite(1058,242);
     car6.addImage(c6)
-    car6.scale=0.1
-    car7 = createSprite(110,200);
+    car6.scale=0.07
+    car7 = createSprite(1100,262);
     car7.addImage(c7)
-    car7.scale=0.1
-    car8 = createSprite(120,200);
+    car7.scale=0.019
+    car8 = createSprite(1113,300);
     car8.addImage(c8)
-    car8.scale=0.1
-    car9 = createSprite(130,200);
+    car8.scale=0.10
+    car9 = createSprite(1106,334);
     car9.addImage(c9)
-    car9.scale=0.1
-    car10 = createSprite(140,200);
+    car9.scale=0.12
+    car10 = createSprite(1076,358);
     car10.addImage(c10)
-    car10.scale=0.01
-
+    car10.scale=0.11
+    
     cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10];
+    box=new Box(660,649)
+    box2=new Box(1747,456)
+    box3=new Box(1742,586)
+    box4=new Box(1396,909)
+    box4=new Box(1147,919)
+    box5=new Box(268,383)
+    box6=new Box(437,868)
+    box7=new Box(186,416)
+    box8=new Box(190,679)
+    box9=new Box(765,536)
+    box10=new Box(1438,201)
+  boxes=[box,box2,box3,box4,box5,box6,box7,box8,box9,box10]
+    
   }
 
   play(){
     form.hide();
 
     Player.getPlayerInfo();
+
+    box.display();
+    box2.display();
+    box3.display();
+    box4.display();
+    box5.display();
+    box6.display();
+    box7.display();
+    box8.display();
+    box9.display();
+    box10.display();
     
     if(allPlayers !== undefined){
       //var display_position = 100;
-      
+      background("#c68767")
+      image(t,0,0,displayWidth,displayHeight)
+      fill("black")
+      text(mouseX,displayWidth-100,100)
+      text(mouseY,displayWidth-100,150)
       //index of the array
       var index = 0;
 
       //x and y position of the cars
-      var x = 40;
+      var x = 10;
       var y;
 
       for(var plr in allPlayers){
-        //add 1 to the index for every loop
-        index = index + 1 ;
+        index = index+1;
+                     x = 500-allPlayers[plr].distance;
+                     y=500;
+                     
+                     cars[index -1].x = x;
+                     cars[index - 1].y = y;
+                       
+                     if(index === player.index){
+                          // to display player name on the basket.
+                         fill("black");
+                         textSize(25);
+                         text(allPlayers[plr].name ,x-25,y+25);
 
-        //position the cars a little away from each other in x direction
-        x = x + 10;
-        //use data form the database to display the cars in y direction
-        y = displayHeight - allPlayers[plr].distance;
-        
-       cars[index-1].x = x;
-        cars[index-1].y = y;
-
-        if (index === player.index){
-          cars[index - 1].shapeColor = "red";
-          //camera.position.x = displayWidth/2;
-          //camera.position.y = cars[index-1].y
-        }
-       
-        //textSize(15);
-        //text(allPlayers[plr].name + ": " + allPlayers[plr].distance, 120,display_position)
+                         
+                     }
       }
 
     }
+    
 
-    if(keyIsDown(UP_ARROW) && player.index !== null){
-      cars[index-1].y +=3
+    if (keyIsDown(RIGHT_ARROW) && player.index !== null) {
+      player.distance -= 10
       player.update();
-    }
-    if(keyIsDown(DOWN_ARROW) && player.index !== null){
-      cars[index-1].y -=3
+  }
+  if (keyIsDown(LEFT_ARROW) && player.index !== null) {
+      player.distance += 10
       player.update();
-    }
-    if(keyIsDown(RIGHT_ARROW) && player.index !== null){
+  }
+  if (keyIsDown(DOWN_ARROW) && player.index !== null) {
+    player.distance += 10
+    player.update();
+}
+if (keyIsDown(UP_ARROW) && player.index !== null) {
+    player.distance -= 10
+    player.update();
+}
+if(cars.index!==null){
+  if(cars.isTouching(boxes)){
+    alert("touched the box")
+  }
+}
+
+    /*if(keyIsDown(RIGHT_ARROW) && player.index !== null){
       cars[index-1].x +=3
       player.update();
     }
@@ -118,6 +157,16 @@ class Game {
       cars[index-1].x -=3
       player.update();
     }
+    if(player.distance>4100){
+      //console.log(error)
+      gameState = 2
+      
+    }*/
+
     drawSprites();
+  }
+  end(){
+    console.log("gameEnded",player.rank)
+   // form.end();
   }
 }
