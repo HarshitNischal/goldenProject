@@ -2,15 +2,19 @@ var canvas, backgroundImage;
 var ranks;
 var gameState = 0;
 var playerCount;
-var allPlayers;
+var allPlayers=[];
 var distance = 0;
 var database;
+
+var carGroup;
+var wallGroup;
 
 
 var form, player, game;
 
 var boxes
 var box, box2, box3, box4, box5, box6, box7 , box8, box9, box10; 
+var wall1,wall2
 
 var cars, car1, car2, car3, car4, car5, car6, car7, car8, car9, car10 ;
 
@@ -34,7 +38,8 @@ function setup(){
   game = new Game();
   game.getState();
   game.start();
- 
+carGroup=createGroup();
+wallGroup=createGroup(); 
 }
 
 
@@ -46,7 +51,7 @@ function draw(){
   {
    background("red")
   }
-  if(playerCount === 10){
+  if(playerCount === 2){
     game.update(1);
   }
   if(gameState === 1){
