@@ -3,10 +3,14 @@ class Form {
   constructor() {
     this.input = createInput(" ").attribute("placeholder","name");
     this.button = createButton('Play');
+    this.kill = createButton('Kill');
     this.greeting = createElement('h2');
     this.title = createElement('h2');
     this.reset = createButton('reset');
     this.greet2 = createElement('h2');
+    this.task = createButton('Task');
+    this.replay=createButton('Replay');
+
   }
   hide(){
     this.greeting.hide();
@@ -43,11 +47,55 @@ this.reset.position(displayWidth-160 , 20);
       this.greet2.hide();
       player.updateCount(0)
       game.update(0)
-      player.updateRank(0)
-      var playerRef=database.ref('players')
-      playerRef.remove()
+    })
+    this.replay.mousePressed(()=>{
+      var playerRef=database.ref('players');
+      playerRef.remove();
       clear();
-      game.start()
+      game.start();
+    })
+  }  
+  imposter()
+{ 
+  debugger;
+  this.task.hide();
+  this.kill.position(displayWidth-250 , 20);
+  if(player.type==="Imposter"){
+    
+    var imposterPlayer="player"+player.index
+    //console.log(imposterPlayer)
+    
+     for (var plr in allPlayers){  
+      console.log(allPlayers[plr])
+      if(player.x - imposterPlayer.x <= 100 || player.y - imposterPlayer.y <= 100){
+      
+        this.kill.mousePressed(()=>{
+          console.log("working")
+         var playerIndex = "players/player" + i;
+         database.ref('/').update({
+           playerIndex:null
+         })
+        })
+       }
+      } 
+
+  
+  }     
+
+  }
+crewMate()
+{
+  this.kill.hide();
+  if(player.type==="crewMate")
+  this.task.position(displayWidth-250 , 20);
+  this.task.mousePressed(()=>{
+    for( var b in boxes)
+    {
+        if(player.positionx - boxes[b].x <100 || player.y - boxes[b].y <100){
+        boxes[b].visible=false;
+        return true;
+      }
+    }
   })
 }
 }
