@@ -28,7 +28,19 @@ class Game {
       form = new Form()
       form.display();
     }
+    wall1=createSprite(450,109,250,123)
+    wall1.shapeColor=rgb(58,73,73)
+    wall2=createSprite(580,23,540,45)
+    wall2.shapeColor=rgb(198,135,103)
+    wall3=createSprite(635,180,355,120)
+    //wall3.shapeColor=rgb(58,73,73)
+    wall4=createSprite(718,100,300,65)
+    //wall4.shapeColor=rgb(58,73,73)
 
+    wallGroup.add(wall4)
+    wallGroup.add(wall3)
+    wallGroup.add(wall2)
+    wallGroup.add(wall1)
     car1 = createSprite(960,253);
     car1.addImage(c1)
     car1.scale=0.11
@@ -59,8 +71,8 @@ class Game {
     car10 = createSprite(1076,358);
     car10.addImage(c10)
     car10.scale=0.11
-    carGroup.add(car1) 
-    carGroup.add(car2)
+    //carGroup.add(car1) 
+    //carGroup.add(car2)
     cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10];
     box=new Box(660,649)
     box2=new Box(1747,456)
@@ -74,11 +86,7 @@ class Game {
     box9=new Box(765,536)
     box10=new Box(1438,201)
   boxes=[box,box2,box3,box4,box5,box6,box7,box8,box9,box10]
-  wall1=createSprite(330,120,250,50) 
-  wall1.shapeColor=rgb(58,73,73) 
-  wall2=createSprite(219,128,100,10) 
-  wallGroup.add(wall1) 
-  wallGroup.add(wall2)
+  
  
   }
 
@@ -86,7 +94,15 @@ class Game {
     form.hide();
 
     Player.getPlayerInfo();
-
+    if(player.index===r)
+    {
+      player.type ="Imposter"
+      player.update()
+    }   
+    else{
+      player.type ="crewMate"
+      player.update()
+    }
     
     
     if(allPlayers !== undefined){
@@ -149,14 +165,13 @@ class Game {
       }
 
     }
-    carGroup.collide(wallGroup)
-    var r=Math.round(random(1,10))
-    console.log(r)
-    if(player.index===r)
+    if(player.type !== "Imposter")
     {
-      player.type ="Imposter"
-      player.update()
+      form.crewMate();
     }
+    else{
+      form.imposter();
+    }    
     
     if(keyIsDown(LEFT_ARROW))
     {
@@ -197,7 +212,8 @@ class Game {
       gameState = 2
       
     }*/
-
+    car1.collide(wallGroup)
+    car2.collide(wallGroup)
     drawSprites();
   }
   end(){
