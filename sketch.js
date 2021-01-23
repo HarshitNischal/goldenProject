@@ -5,7 +5,7 @@ var playerCount;
 var allPlayers=[];
 var distance = 0;
 var database;
-
+var r;
 var carGroup;
 var wallGroup;
 
@@ -14,7 +14,7 @@ var form, player, game;
 
 var boxes
 var box, box2, box3, box4, box5, box6, box7 , box8, box9, box10; 
-var wall1,wall2
+var wall1,wall2,wall3,wall4
 
 var cars, car1, car2, car3, car4, car5, car6, car7, car8, car9, car10 ;
 
@@ -35,6 +35,7 @@ c10=loadImage("among us yellow.png")
 function setup(){
   canvas = createCanvas(displayWidth - 20, displayHeight-30);
   database = firebase.database();
+  r=Math.round(random(1,2))
   game = new Game();
   game.getState();
   game.start();
